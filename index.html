@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Page de surveillance de la Launette</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+body { font-family: Arial, sans-serif; background:#111; color:#eee; margin:0; padding:0; text-align:center; }
+h1 { margin-top:20px; }
+.container { display:flex; flex-direction:column; align-items:center; gap:30px; padding:20px; }
+canvas { width:90%; max-width:800px; height:300px; background:#222; padding:10px; border-radius:10px; }
+.seuil { font-size: 1.2em; margin-bottom: 10px; }
+.utc-info { font-size: 0.9em; color: #aaa; margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<h1>Page de surveillance de la Launette</h1>
+
+<div class="container">
+  <div class="seuil">Seuil d'alerte actuel : <span id="seuilAffiche">?</span> m</div>
+  <div class="utc-info">
+    Toutes les heures affichées sont en UTC.<br>
+    Heure actuelle UTC : <span id="utcTime"></span>
+  </div>
+  <canvas id="chartHauteur"></canvas>
+  <canvas id="chartDebit"></canvas>
+  <canvas id="chartPluie"></canvas>
+</div>
+
+<script>
+
+// --- Affichage heure UTC en live ---
+function updateUTCTime() {
+  const now = new Date();
+  document.getElementById("utcTime").textContent =
+    now.toISOString().replace("T"," ").substring(0,19);
+}
+updateUTCTime();
+setInterval(updateUTCTime, 1000);
+
+// --- Charger le seuil ---
+async function loadSeuil() {
+  try {
+    const res = await fetch("seuil.txt?"+Date.now());
+    const txt = await res.text();
+    document.getElementById("seuilAffiche").innerText = parseFloat(txt).toFixed(2);
+  } catch(e) {
+    console.error("Impossible de lire seuil.txt :", e);
+  }
+}
+
+// --- Format UTC pour graphique HH:MM ---
+function dateUTCLabel(dateStr) {
+  const dt = new Date(dateStr);
+  return dt.getUTCHours().toString().padStart(2,'0') + ":" +
+         dt.getUTCMinutes().toString().padStart(2,'0');
+}
+
+let chartHauteur, chartDebit, chartPluie;
+
+async function loadData() {
+  try {
+    const res = await fetch("data.json?"+Date.now());
+    const data = await res.json();
+
+    const labels = [];
+    const hauteurData = [];
+    const debitData = [];
+    const pluieData = [];
+
+    data.forEach(d => {
+      if(d.hauteur !== null && d.debit !== null) {
+        labels.push(dateUTCLabel(d.date));
+        hauteurData.push(d.hauteur);
+        debitData.push(d.debit);
+        pluieData.push(d.rain_mm || 0);
+      }
+    });
+
+    // --- Hauteur ---
+    if(!chartHauteur) {
+      const ctxH = document.getElementById('chartHauteur').getContext('2d');
+      chartHauteur = new Chart(ctxH, {
+        type:'line',
+        data: { 
+          labels, 
+          datasets:[{ 
+            label:'Hauteur (m)', 
+            data:hauteurData, 
+            borderColor:'cyan', 
+            backgroundColor:'rgba(0,255,255,0.2)', 
+            fill:true 
+          }] 
+        },
+        options:{ responsive:true, maintainAspectRatio:true, scales:{y:{beginAtZero:true}} }
+      });
+    } else {
+      chartHauteur.data.labels = labels;
+      chartHauteur.data.datasets[0].data = hauteurData;
+      chartHauteur.update();
+    }
+
+    // --- Débit ---
+    if(!chartDebit) {
+      const ctxD = document.getElementById('chartDebit').getContext('2d');
+      chartDebit = new Chart(ctxD, {
+        type:'line',
+        data: { 
+          labels, 
+          datasets:[{ 
+            label:'Débit (m³/s)', 
+            data:debitData, 
+            borderColor:'lime', 
+            backgroundColor:'rgba(0,255,0,0.2)', 
+            fill:true 
+          }] 
+        },
+        options:{ responsive:true, maintainAspectRatio:true, scales:{y:{beginAtZero:true}} }
+      });
+    } else {
+      chartDebit.data.labels = labels;
+      chartDebit.data.datasets[0].data = debitData;
+      chartDebit.update();
+    }
+
+    // --- Pluie ---
+    if(!chartPluie) {
+      const ctxP = document.getElementById('chartPluie').getContext('2d');
+      chartPluie = new Chart(ctxP, {
+        type:'bar',
+        data: { 
+          labels, 
+          datasets:[{ 
+            label:'Pluie (mm)', 
+            data:pluieData, 
+            borderColor:'orange', 
+            backgroundColor:'rgba(255,165,0,0.6)', 
+            fill:true 
+          }] 
+        },
+        options:{ responsive:true, maintainAspectRatio:true, scales:{y:{beginAtZero:true}} }
+      });
+    } else {
+      chartPluie.data.labels = labels;
+      chartPluie.data.datasets[0].data = pluieData;
+      chartPluie.update();
+    }
+
+  } catch(e) {
+    console.error("Erreur JSON ou Chart:", e);
+  }
+}
+
+// --- Initialisation ---
+loadSeuil();
+loadData();
+
+// --- Refresh toutes les 15 minutes ---
+setInterval(() => { loadSeuil(); loadData(); }, 15*60*1000);
+
+</script>
+
+</body>
+</html>

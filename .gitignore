@@ -1,0 +1,6 @@
+launette.py
+seuil.txt
+state.json
+*.log
+*.pyc
+__pycache__/
