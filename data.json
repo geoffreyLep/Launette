@@ -1,8 +1,1 @@
-[
-  {
-    "date": "2026-02-22T16:00:00Z",
-    "hauteur": 0.323,
-    "debit": 0.219,
-    "rain_mm": 0.0
-  }
-]
+{"test": "donnees modifiees"}
