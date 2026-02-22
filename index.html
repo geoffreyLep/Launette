@@ -2,163 +2,512 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Page de surveillance de la Launette</title>
+<title>Surveillance de la Launette</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-body { font-family: Arial, sans-serif; background:#111; color:#eee; margin:0; padding:0; text-align:center; }
-h1 { margin-top:20px; }
-.container { display:flex; flex-direction:column; align-items:center; gap:30px; padding:20px; }
-canvas { width:90%; max-width:800px; height:300px; background:#222; padding:10px; border-radius:10px; }
-.seuil { font-size: 1.2em; margin-bottom: 10px; }
-.utc-info { font-size: 0.9em; color: #aaa; margin-bottom: 20px; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1a2e 100%);
+    color: #eee;
+    padding: 20px;
+}
+
+h1 { 
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    color: #00d4ff;
+    text-shadow: 0 0 20px rgba(0,212,255,0.5);
+}
+
+.utc-info {
+    text-align: center;
+    font-size: 0.9em;
+    color: #aaa;
+    margin-bottom: 30px;
+}
+
+.container { 
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   CADRE PRÉVISIONS (en haut)
+   ============================================ */
+
+.previsions-cadre {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: 3px solid #0f3460;
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 50px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.previsions-titre {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #00d4ff;
+    text-shadow: 0 0 15px rgba(0,212,255,0.6);
+}
+
+.niveau-actuel-box {
+    background: linear-gradient(135deg, #0a192f 0%, #0f2536 100%);
+    border: 3px solid #64ffda;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.niveau-actuel-label {
+    font-size: 1.1em;
+    color: #aaa;
+    margin-bottom: 10px;
+}
+
+.niveau-actuel-valeur {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #64ffda;
+    text-shadow: 0 0 20px rgba(100,255,218,0.8);
+    margin: 10px 0;
+}
+
+.niveau-actuel-debit {
+    font-size: 1.1em;
+    color: #aaa;
+    margin-top: 10px;
+}
+
+.previsions-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.prevision-item {
+    background: rgba(15,52,96,0.6);
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 5px solid #888;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.prevision-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.prevision-item.vigilance-normal { border-left-color: #4caf50; }
+.prevision-item.vigilance-preventif { border-left-color: #ffeb3b; }
+.prevision-item.vigilance-vigilance { border-left-color: #ff9800; }
+.prevision-item.vigilance-alerte { border-left-color: #f44336; }
+
+.prevision-temps {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #00d4ff;
+}
+
+.prevision-pluie {
+    font-size: 1.5em;
+    margin: 10px 0;
+    color: #64ffda;
+    font-weight: bold;
+}
+
+.prevision-pluie-label {
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+.prevision-separateur {
+    height: 1px;
+    background: rgba(255,255,255,0.2);
+    margin: 15px 0;
+}
+
+.prevision-niveau {
+    font-size: 1.4em;
+    margin: 10px 0;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.prevision-niveau-label {
+    font-size: 0.8em;
+    color: #aaa;
+}
+
+.prevision-vigilance {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-top: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.vigilance-normal { 
+    background: #4caf50; 
+    color: #fff; 
+}
+
+.vigilance-preventif { 
+    background: #ffeb3b; 
+    color: #000; 
+}
+
+.vigilance-vigilance { 
+    background: #ff9800; 
+    color: #fff; 
+}
+
+.vigilance-alerte { 
+    background: #f44336; 
+    color: #fff;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(244,67,54,0.7); }
+    50% { opacity: 0.9; box-shadow: 0 0 20px 5px rgba(244,67,54,0.4); }
+}
+
+.derniere-maj {
+    text-align: center;
+    font-size: 0.9em;
+    color: #888;
+    margin-top: 25px;
+    font-style: italic;
+}
+
+/* ============================================
+   GRAPHIQUES HISTORIQUES (en bas)
+   ============================================ */
+
+.graphiques-section {
+    margin-top: 50px;
+}
+
+.graphiques-titre {
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 30px;
+    color: #00d4ff;
+    text-shadow: 0 0 15px rgba(0,212,255,0.6);
+}
+
+.chart-box {
+    background: rgba(26,26,46,0.8);
+    border: 2px solid #0f3460;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.chart-titre {
+    font-size: 1.3em;
+    margin-bottom: 15px;
+    color: #64ffda;
+}
+
+canvas {
+    max-width: 100%;
+    height: 300px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1 { font-size: 1.8em; }
+    .previsions-titre { font-size: 1.5em; }
+    .niveau-actuel-valeur { font-size: 2.5em; }
+    .previsions-grille { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
-<h1>Page de surveillance de la Launette</h1>
+<h1>🌊 Surveillance de la Launette</h1>
+<div class="utc-info">
+    Heure actuelle UTC : <span id="utcTime"></span>
+</div>
 
 <div class="container">
-  <div class="seuil">Seuil d'alerte actuel : <span id="seuilAffiche">?</span> m</div>
-  <div class="utc-info">
-    Toutes les heures affichées sont en UTC.<br>
-    Heure actuelle UTC : <span id="utcTime"></span>
-  </div>
-  <canvas id="chartHauteur"></canvas>
-  <canvas id="chartDebit"></canvas>
-  <canvas id="chartPluie"></canvas>
+
+    <!-- ============================================
+         SECTION PRÉVISIONS (EN HAUT)
+         ============================================ -->
+    
+    <div class="previsions-cadre">
+        <div class="previsions-titre">⚠ PRÉVISIONS & PRONOSTICS</div>
+        
+        <div class="niveau-actuel-box">
+            <div class="niveau-actuel-label">Niveau actuel de la rivière</div>
+            <div class="niveau-actuel-valeur" id="niveauActuel">--</div>
+            <div class="niveau-actuel-debit">Débit : <span id="debitActuel">--</span> m³/s</div>
+        </div>
+
+        <div class="previsions-grille" id="previsionsGrille">
+            <!-- Rempli dynamiquement par JavaScript -->
+        </div>
+
+        <div class="derniere-maj">
+            Dernière mise à jour : <span id="derniereMaj">--</span>
+        </div>
+    </div>
+
+    <!-- ============================================
+         SECTION GRAPHIQUES HISTORIQUES (EN BAS)
+         ============================================ -->
+    
+    <div class="graphiques-section">
+        <div class="graphiques-titre">📊 HISTORIQUE DES MESURES</div>
+
+        <div class="chart-box">
+            <div class="chart-titre">Hauteur de la rivière (m)</div>
+            <canvas id="chartHauteur"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <div class="chart-titre">Débit (m³/s)</div>
+            <canvas id="chartDebit"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <div class="chart-titre">Pluie enregistrée (mm)</div>
+            <canvas id="chartPluie"></canvas>
+        </div>
+    </div>
+
 </div>
 
 <script>
 
-// --- Affichage heure UTC en live ---
+// ============================================================================
+// HORLOGE UTC
+// ============================================================================
+
 function updateUTCTime() {
-  const now = new Date();
-  document.getElementById("utcTime").textContent =
-    now.toISOString().replace("T"," ").substring(0,19);
+    const now = new Date();
+    document.getElementById("utcTime").textContent =
+        now.toISOString().replace("T", " ").substring(0, 19);
 }
 updateUTCTime();
 setInterval(updateUTCTime, 1000);
 
-// --- Charger le seuil ---
-async function loadSeuil() {
-  try {
-    const res = await fetch("seuil.txt?"+Date.now());
-    const txt = await res.text();
-    document.getElementById("seuilAffiche").innerText = parseFloat(txt).toFixed(2);
-  } catch(e) {
-    console.error("Impossible de lire seuil.txt :", e);
-  }
+// ============================================================================
+// CHARGEMENT PRÉVISIONS
+// ============================================================================
+
+async function loadPrevisions() {
+    try {
+        const res = await fetch("previsions.json?" + Date.now());
+        const prevData = await res.json();
+        
+        // Niveau actuel
+        document.getElementById("niveauActuel").textContent = prevData.niveau_actuel.toFixed(2) + " m";
+        document.getElementById("debitActuel").textContent = prevData.debit_actuel.toFixed(3);
+        document.getElementById("derniereMaj").textContent = new Date().toLocaleString('fr-FR');
+        
+        // Grille de prévisions
+        const grille = document.getElementById("previsionsGrille");
+        grille.innerHTML = "";
+        
+        prevData.previsions.forEach(prev => {
+            const item = document.createElement("div");
+            item.className = `prevision-item vigilance-${prev.vigilance_classe}`;
+            
+            item.innerHTML = `
+                <div class="prevision-temps">${prev.horizon}</div>
+                
+                <div class="prevision-pluie">
+                    ☔ ${prev.pluie_prevue.toFixed(1)} mm
+                </div>
+                <div class="prevision-pluie-label">Pluie prévue</div>
+                
+                <div class="prevision-separateur"></div>
+                
+                <div class="prevision-niveau">
+                    🌊 ${prev.niveau_prevu.toFixed(2)} m
+                </div>
+                <div class="prevision-niveau-label">Niveau prévu</div>
+                
+                <div class="prevision-vigilance vigilance-${prev.vigilance_classe}">
+                    ${prev.vigilance_texte}
+                </div>
+            `;
+            
+            grille.appendChild(item);
+        });
+        
+    } catch(e) {
+        console.error("Erreur chargement prévisions:", e);
+        document.getElementById("niveauActuel").textContent = "Erreur";
+    }
 }
 
-// --- Format UTC pour graphique HH:MM ---
-function dateUTCLabel(dateStr) {
-  const dt = new Date(dateStr);
-  return dt.getUTCHours().toString().padStart(2,'0') + ":" +
-         dt.getUTCMinutes().toString().padStart(2,'0');
-}
+// ============================================================================
+// CHARGEMENT GRAPHIQUES HISTORIQUES
+// ============================================================================
 
 let chartHauteur, chartDebit, chartPluie;
 
-async function loadData() {
-  try {
-    const res = await fetch("data.json?"+Date.now());
-    const data = await res.json();
-
-    const labels = [];
-    const hauteurData = [];
-    const debitData = [];
-    const pluieData = [];
-
-    data.forEach(d => {
-      if(d.hauteur !== null && d.debit !== null) {
-        labels.push(dateUTCLabel(d.date));
-        hauteurData.push(d.hauteur);
-        debitData.push(d.debit);
-        pluieData.push(d.rain_mm || 0);
-      }
-    });
-
-    // --- Hauteur ---
-    if(!chartHauteur) {
-      const ctxH = document.getElementById('chartHauteur').getContext('2d');
-      chartHauteur = new Chart(ctxH, {
-        type:'line',
-        data: { 
-          labels, 
-          datasets:[{ 
-            label:'Hauteur (m)', 
-            data:hauteurData, 
-            borderColor:'cyan', 
-            backgroundColor:'rgba(0,255,255,0.2)', 
-            fill:true 
-          }] 
-        },
-        options:{ responsive:true, maintainAspectRatio:true, scales:{y:{beginAtZero:true}} }
-      });
-    } else {
-      chartHauteur.data.labels = labels;
-      chartHauteur.data.datasets[0].data = hauteurData;
-      chartHauteur.update();
-    }
-
-    // --- Débit ---
-    if(!chartDebit) {
-      const ctxD = document.getElementById('chartDebit').getContext('2d');
-      chartDebit = new Chart(ctxD, {
-        type:'line',
-        data: { 
-          labels, 
-          datasets:[{ 
-            label:'Débit (m³/s)', 
-            data:debitData, 
-            borderColor:'lime', 
-            backgroundColor:'rgba(0,255,0,0.2)', 
-            fill:true 
-          }] 
-        },
-        options:{ responsive:true, maintainAspectRatio:true, scales:{y:{beginAtZero:true}} }
-      });
-    } else {
-      chartDebit.data.labels = labels;
-      chartDebit.data.datasets[0].data = debitData;
-      chartDebit.update();
-    }
-
-    // --- Pluie ---
-    if(!chartPluie) {
-      const ctxP = document.getElementById('chartPluie').getContext('2d');
-      chartPluie = new Chart(ctxP, {
-        type:'bar',
-        data: { 
-          labels, 
-          datasets:[{ 
-            label:'Pluie (mm)', 
-            data:pluieData, 
-            borderColor:'orange', 
-            backgroundColor:'rgba(255,165,0,0.6)', 
-            fill:true 
-          }] 
-        },
-        options:{ responsive:true, maintainAspectRatio:true, scales:{y:{beginAtZero:true}} }
-      });
-    } else {
-      chartPluie.data.labels = labels;
-      chartPluie.data.datasets[0].data = pluieData;
-      chartPluie.update();
-    }
-
-  } catch(e) {
-    console.error("Erreur JSON ou Chart:", e);
-  }
+function dateUTCLabel(dateStr) {
+    const dt = new Date(dateStr);
+    return dt.getUTCHours().toString().padStart(2, '0') + ":" +
+           dt.getUTCMinutes().toString().padStart(2, '0');
 }
 
-// --- Initialisation ---
-loadSeuil();
-loadData();
+async function loadGraphiques() {
+    try {
+        const res = await fetch("data.json?" + Date.now());
+        const data = await res.json();
 
-// --- Refresh toutes les 15 minutes ---
-setInterval(() => { loadSeuil(); loadData(); }, 15*60*1000);
+        const labels = [];
+        const hauteurData = [];
+        const debitData = [];
+        const pluieData = [];
+
+        data.forEach(d => {
+            if (d.hauteur !== null && d.debit !== null) {
+                labels.push(dateUTCLabel(d.date));
+                hauteurData.push(d.hauteur);
+                debitData.push(d.debit);
+                pluieData.push(d.rain_mm || 0);
+            }
+        });
+
+        // Graphique Hauteur
+        if (!chartHauteur) {
+            const ctxH = document.getElementById('chartHauteur').getContext('2d');
+            chartHauteur = new Chart(ctxH, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Hauteur (m)',
+                        data: hauteurData,
+                        borderColor: '#64ffda',
+                        backgroundColor: 'rgba(100,255,218,0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#eee' } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: { beginAtZero: true, ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                    }
+                }
+            });
+        } else {
+            chartHauteur.data.labels = labels;
+            chartHauteur.data.datasets[0].data = hauteurData;
+            chartHauteur.update();
+        }
+
+        // Graphique Débit
+        if (!chartDebit) {
+            const ctxD = document.getElementById('chartDebit').getContext('2d');
+            chartDebit = new Chart(ctxD, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Débit (m³/s)',
+                        data: debitData,
+                        borderColor: '#00d4ff',
+                        backgroundColor: 'rgba(0,212,255,0.2)',
+                        borderWidth: 2,
+                        fill: true,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#eee' } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: { beginAtZero: true, ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                    }
+                }
+            });
+        } else {
+            chartDebit.data.labels = labels;
+            chartDebit.data.datasets[0].data = debitData;
+            chartDebit.update();
+        }
+
+        // Graphique Pluie
+        if (!chartPluie) {
+            const ctxP = document.getElementById('chartPluie').getContext('2d');
+            chartPluie = new Chart(ctxP, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Pluie (mm)',
+                        data: pluieData,
+                        backgroundColor: 'rgba(255,165,0,0.7)',
+                        borderColor: 'rgba(255,165,0,1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { labels: { color: '#eee' } }
+                    },
+                    scales: {
+                        x: { ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                        y: { beginAtZero: true, ticks: { color: '#aaa' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                    }
+                }
+            });
+        } else {
+            chartPluie.data.labels = labels;
+            chartPluie.data.datasets[0].data = pluieData;
+            chartPluie.update();
+        }
+
+    } catch (e) {
+        console.error("Erreur chargement graphiques:", e);
+    }
+}
+
+// ============================================================================
+// INITIALISATION ET REFRESH AUTO
+// ============================================================================
+
+loadPrevisions();
+loadGraphiques();
+
+// Refresh toutes les 15 minutes
+setInterval(() => {
+    loadPrevisions();
+    loadGraphiques();
+}, 15 * 60 * 1000);
 
 </script>
 
