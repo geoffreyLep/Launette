@@ -86,6 +86,92 @@ h1 {
     margin-top: 10px;
 }
 
+/* Styles pour les seuils */
+.seuils-container {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px solid rgba(100,255,218,0.3);
+}
+
+.seuils-titre {
+    font-size: 1em;
+    color: #aaa;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.seuils-grille {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.seuil-item {
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    padding: 15px 10px;
+    border: 2px solid;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.seuil-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.seuil-item.normal {
+    border-color: #4caf50;
+    background: linear-gradient(135deg, rgba(76,175,80,0.1), rgba(76,175,80,0.05));
+}
+
+.seuil-item.preventif {
+    border-color: #ffeb3b;
+    background: linear-gradient(135deg, rgba(255,235,59,0.1), rgba(255,235,59,0.05));
+}
+
+.seuil-item.vigilance {
+    border-color: #ff9800;
+    background: linear-gradient(135deg, rgba(255,152,0,0.1), rgba(255,152,0,0.05));
+}
+
+.seuil-item.alerte {
+    border-color: #f44336;
+    background: linear-gradient(135deg, rgba(244,67,54,0.1), rgba(244,67,54,0.05));
+}
+
+.seuil-label {
+    font-size: 0.85em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.seuil-item.normal .seuil-label {
+    color: #4caf50;
+}
+
+.seuil-item.preventif .seuil-label {
+    color: #ffeb3b;
+}
+
+.seuil-item.vigilance .seuil-label {
+    color: #ff9800;
+}
+
+.seuil-item.alerte .seuil-label {
+    color: #f44336;
+}
+
+.seuil-valeur {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #fff;
+}
+
 .previsions-grille {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -233,6 +319,7 @@ canvas {
     .previsions-titre { font-size: 1.5em; }
     .niveau-actuel-valeur { font-size: 2.5em; }
     .previsions-grille { grid-template-columns: 1fr; }
+    .seuils-grille { grid-template-columns: repeat(2, 1fr); }
 }
 </style>
 </head>
@@ -256,6 +343,14 @@ canvas {
             <div class="niveau-actuel-label">Niveau actuel de la rivière</div>
             <div class="niveau-actuel-valeur" id="niveauActuel">--</div>
             <div class="niveau-actuel-debit">Débit : <span id="debitActuel">--</span> m³/s</div>
+            
+            <!-- SEUILS D'ALERTE -->
+            <div class="seuils-container">
+                <div class="seuils-titre">📏 Seuils d'alerte</div>
+                <div class="seuils-grille" id="seuilsGrille">
+                    <!-- Rempli dynamiquement par JavaScript -->
+                </div>
+            </div>
         </div>
 
         <div class="previsions-grille" id="previsionsGrille">
@@ -305,6 +400,45 @@ function updateUTCTime() {
 }
 updateUTCTime();
 setInterval(updateUTCTime, 1000);
+
+// ============================================================================
+// CHARGEMENT DES SEUILS
+// ============================================================================
+
+async function loadSeuils() {
+    try {
+        const res = await fetch("seuils.json?" + Date.now());
+        const seuils = await res.json();
+        
+        const grille = document.getElementById("seuilsGrille");
+        grille.innerHTML = "";
+        
+        // Ordre d'affichage et labels personnalisés
+        const seuilsConfig = [
+            { key: 'normal', label: '✅ Normal', classe: 'normal' },
+            { key: 'preventif', label: '⚠ Préventif', classe: 'preventif' },
+            { key: 'vigilance', label: '🟠 Vigilance', classe: 'vigilance' },
+            { key: 'alerte', label: '🔴 Alerte', classe: 'alerte' }
+        ];
+        
+        seuilsConfig.forEach(config => {
+            if (seuils[config.key] !== undefined) {
+                const item = document.createElement("div");
+                item.className = `seuil-item ${config.classe}`;
+                
+                item.innerHTML = `
+                    <div class="seuil-label">${config.label}</div>
+                    <div class="seuil-valeur">${seuils[config.key].toFixed(2)} m</div>
+                `;
+                
+                grille.appendChild(item);
+            }
+        });
+        
+    } catch(e) {
+        console.error("Erreur chargement seuils:", e);
+    }
+}
 
 // ============================================================================
 // CHARGEMENT PRÉVISIONS
@@ -500,11 +634,13 @@ async function loadGraphiques() {
 // INITIALISATION ET REFRESH AUTO
 // ============================================================================
 
+loadSeuils();
 loadPrevisions();
 loadGraphiques();
 
 // Refresh toutes les 15 minutes
 setInterval(() => {
+    loadSeuils();
     loadPrevisions();
     loadGraphiques();
 }, 15 * 60 * 1000);
