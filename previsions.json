@@ -1,5 +1,5 @@
 {
-  "date_maj": "2026-02-22T20:43:21.363862+00:00",
+  "date_maj": "2026-02-22T20:48:29.273995+00:00",
   "niveau_actuel": 0.34,
   "debit_actuel": 0.246,
   "previsions": [
@@ -8,54 +8,54 @@
       "heures": 1,
       "pluie_prevue": 0.6,
       "niveau_prevu": 0.4,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "niveau_texte": "alerte",
+      "vigilance_classe": "alerte",
+      "vigilance_texte": "ALERTE"
     },
     {
       "horizon": "6 heures",
       "heures": 6,
       "pluie_prevue": 1.1,
       "niveau_prevu": 0.42,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "niveau_texte": "alerte",
+      "vigilance_classe": "alerte",
+      "vigilance_texte": "ALERTE"
     },
     {
       "horizon": "12 heures",
       "heures": 12,
       "pluie_prevue": 1.1,
       "niveau_prevu": 0.42,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "niveau_texte": "alerte",
+      "vigilance_classe": "alerte",
+      "vigilance_texte": "ALERTE"
     },
     {
       "horizon": "24 heures",
       "heures": 24,
       "pluie_prevue": 1.3,
       "niveau_prevu": 0.42,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "niveau_texte": "alerte",
+      "vigilance_classe": "alerte",
+      "vigilance_texte": "ALERTE"
     },
     {
       "horizon": "48 heures",
       "heures": 48,
       "pluie_prevue": 1.3,
       "niveau_prevu": 0.42,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "niveau_texte": "alerte",
+      "vigilance_classe": "alerte",
+      "vigilance_texte": "ALERTE"
     },
     {
       "horizon": "72 heures",
       "heures": 72,
       "pluie_prevue": 1.3,
       "niveau_prevu": 0.42,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "niveau_texte": "alerte",
+      "vigilance_classe": "alerte",
+      "vigilance_texte": "ALERTE"
     }
   ]
 }
