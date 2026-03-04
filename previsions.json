@@ -1,13 +1,13 @@
 {
-  "date_maj": "2026-03-03T12:30:07.303641+00:00",
-  "niveau_actuel": 0.21,
-  "debit_actuel": 0.066,
+  "date_maj": "2026-03-04T12:00:11.279366+00:00",
+  "niveau_actuel": 0.2,
+  "debit_actuel": 0.052,
   "previsions": [
     {
       "horizon": "1 heure",
       "heures": 1,
       "pluie_prevue": 0.0,
-      "niveau_prevu": 0.2,
+      "niveau_prevu": 0.19,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
