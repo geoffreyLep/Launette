@@ -1,7 +1,7 @@
 {
-  "date_maj": "2026-03-21T12:00:11.625009+00:00",
-  "niveau_actuel": 0.2,
-  "debit_actuel": 0.053,
+  "date_maj": "2026-03-21T12:30:06.023104+00:00",
+  "niveau_actuel": 0.21,
+  "debit_actuel": 0.062,
   "previsions": [
     {
       "horizon": "1 heure",
