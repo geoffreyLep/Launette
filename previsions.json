@@ -1,7 +1,7 @@
 {
-  "date_maj": "2026-05-09T11:30:06.091476+00:00",
+  "date_maj": "2026-05-10T11:00:13.835490+00:00",
   "niveau_actuel": 0.2,
-  "debit_actuel": 0.051,
+  "debit_actuel": 0.055,
   "previsions": [
     {
       "horizon": "1 heure",
@@ -15,8 +15,8 @@
     {
       "horizon": "6 heures",
       "heures": 6,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
+      "pluie_prevue": 7.6,
+      "niveau_prevu": 0.69,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
@@ -24,38 +24,38 @@
     {
       "horizon": "12 heures",
       "heures": 12,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "pluie_prevue": 20.0,
+      "niveau_prevu": 0.98,
+      "niveau_texte": "preventif",
+      "vigilance_classe": "preventif",
+      "vigilance_texte": "PREVENTIF"
     },
     {
       "horizon": "24 heures",
       "heures": 24,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "pluie_prevue": 26.7,
+      "niveau_prevu": 0.98,
+      "niveau_texte": "preventif",
+      "vigilance_classe": "preventif",
+      "vigilance_texte": "PREVENTIF"
     },
     {
       "horizon": "48 heures",
       "heures": 48,
-      "pluie_prevue": 11.0,
-      "niveau_prevu": 0.46,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "pluie_prevue": 26.7,
+      "niveau_prevu": 0.98,
+      "niveau_texte": "preventif",
+      "vigilance_classe": "preventif",
+      "vigilance_texte": "PREVENTIF"
     },
     {
       "horizon": "72 heures",
       "heures": 72,
-      "pluie_prevue": 11.0,
-      "niveau_prevu": 0.46,
-      "niveau_texte": "normal",
-      "vigilance_classe": "normal",
-      "vigilance_texte": "NORMAL"
+      "pluie_prevue": 26.7,
+      "niveau_prevu": 0.98,
+      "niveau_texte": "preventif",
+      "vigilance_classe": "preventif",
+      "vigilance_texte": "PREVENTIF"
     }
   ]
 }
