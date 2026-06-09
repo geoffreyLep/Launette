@@ -1,7 +1,7 @@
 {
-  "date_maj": "2026-06-07T11:30:07.853149+00:00",
+  "date_maj": "2026-06-09T11:00:12.863676+00:00",
   "niveau_actuel": 0.2,
-  "debit_actuel": 0.046,
+  "debit_actuel": 0.051,
   "previsions": [
     {
       "horizon": "1 heure",
@@ -24,8 +24,8 @@
     {
       "horizon": "12 heures",
       "heures": 12,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
+      "pluie_prevue": 0.4,
+      "niveau_prevu": 0.22,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
@@ -33,8 +33,8 @@
     {
       "horizon": "24 heures",
       "heures": 24,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
+      "pluie_prevue": 0.5,
+      "niveau_prevu": 0.22,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
@@ -42,7 +42,7 @@
     {
       "horizon": "48 heures",
       "heures": 48,
-      "pluie_prevue": 0.8,
+      "pluie_prevue": 0.6,
       "niveau_prevu": 0.22,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
@@ -51,7 +51,7 @@
     {
       "horizon": "72 heures",
       "heures": 72,
-      "pluie_prevue": 0.8,
+      "pluie_prevue": 1.3,
       "niveau_prevu": 0.22,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
