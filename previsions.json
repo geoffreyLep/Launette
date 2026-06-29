@@ -1,13 +1,13 @@
 {
-  "date_maj": "2026-06-28T11:30:06.820403+00:00",
-  "niveau_actuel": 0.27,
-  "debit_actuel": 0.145,
+  "date_maj": "2026-06-29T11:00:10.813668+00:00",
+  "niveau_actuel": 0.2,
+  "debit_actuel": 0.055,
   "previsions": [
     {
       "horizon": "1 heure",
       "heures": 1,
       "pluie_prevue": 0.0,
-      "niveau_prevu": 0.26,
+      "niveau_prevu": 0.19,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
