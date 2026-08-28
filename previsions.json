@@ -1,13 +1,13 @@
 {
-  "date_maj": "2026-08-28T11:00:12.222997+00:00",
-  "niveau_actuel": 0.42,
-  "debit_actuel": 0.39,
+  "date_maj": "2026-08-28T11:30:09.663245+00:00",
+  "niveau_actuel": 0.43,
+  "debit_actuel": 0.401,
   "previsions": [
     {
       "horizon": "1 heure",
       "heures": 1,
       "pluie_prevue": 0.6,
-      "niveau_prevu": 0.48,
+      "niveau_prevu": 0.49,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
@@ -43,7 +43,7 @@
       "horizon": "48 heures",
       "heures": 48,
       "pluie_prevue": 3.9,
-      "niveau_prevu": 0.58,
+      "niveau_prevu": 0.59,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
@@ -52,7 +52,7 @@
       "horizon": "72 heures",
       "heures": 72,
       "pluie_prevue": 3.9,
-      "niveau_prevu": 0.58,
+      "niveau_prevu": 0.59,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
