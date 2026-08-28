@@ -1,13 +1,13 @@
 {
-  "date_maj": "2026-08-27T11:30:16.195908+00:00",
-  "niveau_actuel": 0.19,
-  "debit_actuel": 0.036,
+  "date_maj": "2026-08-28T11:00:12.222997+00:00",
+  "niveau_actuel": 0.42,
+  "debit_actuel": 0.39,
   "previsions": [
     {
       "horizon": "1 heure",
       "heures": 1,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
+      "pluie_prevue": 0.6,
+      "niveau_prevu": 0.48,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
@@ -15,8 +15,8 @@
     {
       "horizon": "6 heures",
       "heures": 6,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
+      "pluie_prevue": 1.9,
+      "niveau_prevu": 0.58,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
@@ -24,38 +24,38 @@
     {
       "horizon": "12 heures",
       "heures": 12,
-      "pluie_prevue": 14.4,
-      "niveau_prevu": 0.97,
-      "niveau_texte": "preventif",
-      "vigilance_classe": "preventif",
-      "vigilance_texte": "PREVENTIF"
+      "pluie_prevue": 1.9,
+      "niveau_prevu": 0.58,
+      "niveau_texte": "normal",
+      "vigilance_classe": "normal",
+      "vigilance_texte": "NORMAL"
     },
     {
       "horizon": "24 heures",
       "heures": 24,
-      "pluie_prevue": 15.1,
-      "niveau_prevu": 0.97,
-      "niveau_texte": "preventif",
-      "vigilance_classe": "preventif",
-      "vigilance_texte": "PREVENTIF"
+      "pluie_prevue": 1.9,
+      "niveau_prevu": 0.58,
+      "niveau_texte": "normal",
+      "vigilance_classe": "normal",
+      "vigilance_texte": "NORMAL"
     },
     {
       "horizon": "48 heures",
       "heures": 48,
-      "pluie_prevue": 18.3,
-      "niveau_prevu": 0.97,
-      "niveau_texte": "preventif",
-      "vigilance_classe": "preventif",
-      "vigilance_texte": "PREVENTIF"
+      "pluie_prevue": 3.9,
+      "niveau_prevu": 0.58,
+      "niveau_texte": "normal",
+      "vigilance_classe": "normal",
+      "vigilance_texte": "NORMAL"
     },
     {
       "horizon": "72 heures",
       "heures": 72,
-      "pluie_prevue": 22.1,
-      "niveau_prevu": 0.97,
-      "niveau_texte": "preventif",
-      "vigilance_classe": "preventif",
-      "vigilance_texte": "PREVENTIF"
+      "pluie_prevue": 3.9,
+      "niveau_prevu": 0.58,
+      "niveau_texte": "normal",
+      "vigilance_classe": "normal",
+      "vigilance_texte": "NORMAL"
     }
   ]
 }
