@@ -1,7 +1,7 @@
 {
-  "date_maj": "2026-09-05T11:30:12.592842+00:00",
-  "niveau_actuel": 0.18,
-  "debit_actuel": 0.035,
+  "date_maj": "2026-09-06T11:00:15.817723+00:00",
+  "niveau_actuel": 0.19,
+  "debit_actuel": 0.041,
   "previsions": [
     {
       "horizon": "1 heure",
@@ -51,8 +51,8 @@
     {
       "horizon": "72 heures",
       "heures": 72,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
+      "pluie_prevue": 7.6,
+      "niveau_prevu": 0.33,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
