@@ -1,7 +1,7 @@
 {
-  "date_maj": "2026-11-05T12:00:16.777045+00:00",
+  "date_maj": "2026-11-07T12:00:12.866423+00:00",
   "niveau_actuel": 0.18,
-  "debit_actuel": 0.03,
+  "debit_actuel": 0.031,
   "previsions": [
     {
       "horizon": "1 heure",
@@ -51,8 +51,8 @@
     {
       "horizon": "72 heures",
       "heures": 72,
-      "pluie_prevue": 0.0,
-      "niveau_prevu": 0.19,
+      "pluie_prevue": 2.3,
+      "niveau_prevu": 0.22,
       "niveau_texte": "normal",
       "vigilance_classe": "normal",
       "vigilance_texte": "NORMAL"
